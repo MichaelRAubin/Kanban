@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-    <router-link class="navbar-brand" :to="{ name: 'Home' }">CodeWorks Starter</router-link>
+    <router-link class="navbar-brand" :to="{ name: 'Home' }">KanBan-IT</router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -69,5 +69,8 @@ export default {
 <style scoped lang="scss">
 .router-link-active {
   color: white !important;
+}
+bg-black {
+  background-color: black;
 }
 </style>
