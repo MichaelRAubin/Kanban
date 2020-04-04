@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { $resource } from "./resource";
+import boardsStore from "./BoardsStore";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   actions: {
     async initUserData({ dispatch }) {
       dispatch("getProfile");
+      dispatch("getBoards");
     },
     async getProfile({ commit }) {
       let profile = await $resource.get("api/profile");
@@ -28,5 +30,7 @@ export default new Vuex.Store({
     },
 
   },
-  modules: {}
+  modules: {
+    boardsStore
+  }
 });

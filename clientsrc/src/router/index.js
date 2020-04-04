@@ -8,6 +8,17 @@ function loadView(path) {
   return () => import("../views/" + path);
 }
 
+export const dashboardRoutes = [{
+  path: "",
+  name: "Dashboard.Profile",
+  displayName: "Profile",
+  component: loadView("Profile.vue")
+}, {
+  path: "boards",
+  name: "Dashboard.Boards",
+  displayname: "Boards",
+  component: loadView("Boards.vue")
+}]
 
 const routes = [
   {
@@ -16,14 +27,18 @@ const routes = [
     component: loadView("Home.vue")
   },
   {
+    path: "/boards/:boardId",
+    name: "Board",
+    beforeEnter: authGuard,
+    component: loadView("Board.vue")
+  },
+  {
     path: '/dashboard',
     beforeEnter: authGuard,
     component: loadView("Dashboard.vue"),
-    children: [{
-      path: "",
-      name: "Dashboard.Profile",
-      component: loadView("Profile.vue")
-    }]
+    children: [
+      ...dashboardRoutes
+    ]
   },
 ];
 
