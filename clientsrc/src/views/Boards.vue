@@ -31,11 +31,21 @@ export default {
       return this.$store.state.profile;
     },
     boards() {
-      return this.$store.dispatch("createBoard", this.editable);
+      return this.$store.state.boardsStore.boards;
+    }
+  },
+  data() {
+    return {
+      editable: new Board()
+    };
+  },
+  methods: {
+    createBoard() {
+      this.$store.dispatch("createBoard", this.editable);
       this.editable = new Board();
     }
   }
 };
 </script>
-<style lang="scss" scoped>
+<style>
 </style>

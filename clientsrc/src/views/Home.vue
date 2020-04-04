@@ -48,7 +48,7 @@ export default {
   computed: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .home {
   background-image: url("/Kanban.jpg");
   height: 92.3vh;

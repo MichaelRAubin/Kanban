@@ -70,7 +70,4 @@ export default {
 .router-link-active {
   color: white !important;
 }
-bg-black {
-  background-color: black;
-}
 </style>

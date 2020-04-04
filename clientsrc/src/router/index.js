@@ -16,9 +16,10 @@ export const dashboardRoutes = [{
 }, {
   path: "boards",
   name: "Dashboard.Boards",
-  displayname: "Boards",
+  displayName: "Boards",
   component: loadView("Boards.vue")
-}]
+}];
+
 
 const routes = [
   {
