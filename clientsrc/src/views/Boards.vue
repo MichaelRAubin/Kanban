@@ -17,7 +17,15 @@
     <!--FIXME Create a BoardCardComponent -->
     <div class="boards">
       <div class="card p-2 my-2 elevation-4" v-for="board in boards" :key="board.id">
-        <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
+        <span>
+          <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
+          <i
+            v-if="$auth.isAuthenticated && $auth.user.email == board.creatorEmail"
+            class="fa fa-trash text-danger mr-2 ml-3"
+            style="font-size:18px;"
+            @click="deleteBoard(board)"
+          ></i>
+        </span>
       </div>
     </div>
   </div>
@@ -43,6 +51,14 @@ export default {
     createBoard() {
       this.$store.dispatch("createBoard", this.editable);
       this.editable = new Board();
+    },
+    async deleteBoard(board) {
+      let yes = await this.$confirm("Delete the board?");
+      if (!yes) {
+        return;
+      } else {
+      }
+      this.$store.dispatch("deleteBoard", board);
     }
   }
 };

@@ -1,6 +1,5 @@
 import BaseController from "../utils/BaseController";
 import auth0Provider from "@bcwdev/auth0provider";
-import { dbContext } from "../db/DbContext";
 import { boardsService } from "../services/BoardsService"
 
 export class BoardsController extends BaseController {
@@ -13,7 +12,7 @@ export class BoardsController extends BaseController {
             .post("", this.create)
             .delete("/:boardId", this.delete);
     }
-    //FIXME all methods MUST be abstrated to a Service
+
     async getBoards(req, res, next) {
         try {
             let boards = await boardsService.find({ creatorEmail: req.userInfo.email });
@@ -45,8 +44,9 @@ export class BoardsController extends BaseController {
     async delete(req, res, next) {
         try {
             req.body.creatorEmail = req.userInfo.email;
-            await boardsService.delete(req.params.id, req.body.creatorEmail)
-            res.send("deleted")
+            // @ts-ignore
+            await boardsService.delete({ _id: req.params.boardId, creatorEmail: req.userInfo.email });
+            res.send("Board Deleted")
         } catch (error) {
             next(error)
         }

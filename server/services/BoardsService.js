@@ -16,20 +16,16 @@ class BoardsService {
         }
         return board;
     }
-    async create(boardData, creatorEmail) {
+    async create(boardData) {
         let board = await dbContext.Boards.create(boardData)
-        if (!boardData.creatorEmail) {
+        if (!board) {
             throw new BadRequest("Invalid email")
         }
         return board;
     }
 
-    async delete(_id, creatorEmail) {
-        let board = await dbContext.Boards.findByIdAndDelete(_id, creatorEmail)
-        if (creatorEmail != board.id.creatorEmail) {
-            throw new BadRequest("Invalid email")
-        }
-        return board;
+    async delete(_id) {
+        return await dbContext.Boards.findByIdAndDelete(_id);
     }
 }
 export const boardsService = new BoardsService();

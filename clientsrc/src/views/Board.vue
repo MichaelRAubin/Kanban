@@ -21,7 +21,8 @@ export default {
     board() {
       return this.$store.state.boardsStore.board;
     }
-  }
+  },
+  methods: {}
 };
 </script>
 <style>
