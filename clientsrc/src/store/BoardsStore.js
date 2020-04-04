@@ -41,8 +41,6 @@ export default {
         async deleteBoard({ commit }, board) {
             await $resource.delete("api/boards/" + board.id)
             commit("deleteBoard", board)
-
         }
-
-    }
+    },
 }

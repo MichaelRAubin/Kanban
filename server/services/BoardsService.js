@@ -25,7 +25,10 @@ class BoardsService {
     }
 
     async delete(_id) {
-        return await dbContext.Boards.findByIdAndDelete(_id);
+        let board = await dbContext.Boards.findByIdAndDelete(_id);
+        if (!_id) {
+            throw new BadRequest("Invalid ID")
+        } return board
     }
 }
 export const boardsService = new BoardsService();
