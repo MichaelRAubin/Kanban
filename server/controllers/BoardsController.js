@@ -43,8 +43,6 @@ export class BoardsController extends BaseController {
     }
     async delete(req, res, next) {
         try {
-            req.body.creatorEmail = req.userInfo.email;
-            // @ts-ignore
             await boardsService.delete({ _id: req.params.boardId });
             res.send("Board Deleted")
         } catch (error) {

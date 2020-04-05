@@ -2,7 +2,6 @@
   <div class="board">
     <h4>Name: {{board.name}}</h4>
     <h5>Description: {{board.description}}</h5>
-    <!--TODO add delete button here -->
     <hr class="m-0 pb-0" />
     <div class="boxes d-flex">
       <div class="m-1 mt-3" v-for="n in 4" :key="n">
