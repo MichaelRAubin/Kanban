@@ -4,25 +4,37 @@ import auth0Provider from "@bcwdev/auth0provider";
 
 export class ListsController extends BaseController {
     constructor() {
+        //TODO Check this route
         super("api/lists");
         this.router
             .use(auth0Provider.getAuthorizedUserInfo)
-            .get("", this.get)
+            .get("", this.getLists)
+            .get(":listId", this.getList)
+            //TODO - may need to add route to get tasks from a list
             .post("", this.create)
             .delete("/:listId", this.delete);
     }
-    async get(req, res, next) {
+    async getLists(req, res, next) {
         try {
-            req.query.creatorEmail = req.userInfo.email;
-            let lists = await listsService.get(req.query)
+            let lists = await listsService.find({ creatorEmail: req.userInfo.email })
             res.send(lists)
         } catch (error) {
             next(error);
         }
     }
+    async getList(req, res, next) {
+        try {
+            let list = await listsService.findOne({ _id: req.params.listId, creatorEmail: req.userInfo.email });
+            res.send(list);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async create(req, res, next) {
         try {
-            let list = await listsService.create(req.userInfo.email, req.body)
+            req.query.creatorEmail = req.userInfo.email;
+            let list = await listsService.create(req.body)
             res.send(list);
         } catch (error) {
             next(error);
@@ -31,8 +43,8 @@ export class ListsController extends BaseController {
 
     async delete(req, res, next) {
         try {
-            let list = await listsService.delete(req.userInfo.email, req.params.listId);
-            res.send(list)
+            let list = await listsService.delete(req.params.listId);
+            res.send("List Deleted", list)
         } catch (error) {
             next(error);
         }

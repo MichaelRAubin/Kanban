@@ -1,19 +1,34 @@
-import { dbContext } from "../db/DbContext";
+import { dbContext } from "../db/DbContext"
 import { BadRequest } from "../utils/Errors";
 
 class ListsService {
-    async get(query = {}) {
-        return await dbContext.Lists.find(query);
+    async find(creatorEmail) {
+        let lists = await dbContext.Lists.find(creatorEmail)
+        if (!creatorEmail) {
+            throw new BadRequest("Invalid email");
+        }
+        return lists;
+    }
+    async findOne(_id, creatorEmail) {
+        let list = await dbContext.Lists.findById(_id, creatorEmail)
+        if (!list) {
+            throw new BadRequest("Invalid Id")
+        }
+        return list;
+    }
+    async create(listData) {
+        let list = await dbContext.Lists.create(listData)
+        if (!list) {
+            throw new BadRequest("Invalid email")
+        }
+        return list;
     }
 
-    async create(email, listData) {
-        listData.creatorEmail = email;
-        return await dbContext.Lists.create(listData)
-    }
-
-    async delete(email, id) {
-        return await dbContext.Lists.findOneAndRemove({ creatorEmail: email, _id: id });
+    async delete(_id) {
+        let list = await dbContext.Lists.findByIdAndDelete(_id);
+        if (!_id) {
+            throw new BadRequest("Invalid ID")
+        } return list._id
     }
 }
-
 export const listsService = new ListsService();
