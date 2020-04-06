@@ -9,6 +9,7 @@ export class BoardsController extends BaseController {
             .use(auth0Provider.getAuthorizedUserInfo)
             .get("", this.getBoards)
             .get("/:boardId", this.getBoard)
+            //TODO add in route to get lists tied to board
             .post("", this.create)
             .delete("/:boardId", this.delete);
     }
@@ -43,7 +44,7 @@ export class BoardsController extends BaseController {
     }
     async delete(req, res, next) {
         try {
-            await boardsService.delete({ _id: req.params.boardId });
+            let board = await boardsService.delete(req.params.boardId);
             res.send("Board Deleted")
         } catch (error) {
             next(error)

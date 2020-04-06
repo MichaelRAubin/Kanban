@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--FIXME extract to a BoardEditorComponent -->
     <form @submit.prevent="createBoard">
       <div class="mb-3">
         <label for="name">Name:</label>
@@ -14,7 +13,6 @@
         <button class="btn btn btn-success btn-block">Create Board</button>
       </div>
     </form>
-    <!--FIXME Create a BoardCardComponent -->
     <div class="boards">
       <div class="card p-2 my-2 elevation-4" v-for="board in boards" :key="board.id">
         <span>
@@ -34,6 +32,7 @@
 import { Board } from "../models/Board";
 export default {
   name: "Boards",
+  components: {},
   computed: {
     profile() {
       return this.$store.state.profile;
