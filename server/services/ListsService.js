@@ -16,8 +16,11 @@ class ListsService {
         }
         return list;
     }
-    findByBoardId(id) {
-
+    async findByBoardId(_id) {
+        let lists = await dbContext.Lists.find(_id)
+        if (!_id) {
+            throw new BadRequest("Invalid ID")
+        } return lists
     }
     async create(listData) {
         let list = await dbContext.Lists.create(listData)
@@ -26,7 +29,6 @@ class ListsService {
         }
         return list;
     }
-
     async delete(_id) {
         let list = await dbContext.Lists.findByIdAndDelete(_id);
         if (!_id) {
