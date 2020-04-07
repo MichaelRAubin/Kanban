@@ -16,6 +16,9 @@ class ListsService {
         }
         return list;
     }
+    findByBoardId(id) {
+
+    }
     async create(listData) {
         let list = await dbContext.Lists.create(listData)
         if (!list) {
