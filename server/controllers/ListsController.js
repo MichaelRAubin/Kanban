@@ -1,6 +1,7 @@
 import BaseController from "../utils/BaseController";
 import { listsService } from "../services/ListsService";
 import auth0Provider from "@bcwdev/auth0provider";
+import { tasksService } from "../services/TasksService"
 
 export class ListsController extends BaseController {
     constructor() {
@@ -10,6 +11,7 @@ export class ListsController extends BaseController {
             .use(auth0Provider.getAuthorizedUserInfo)
             .get("", this.getLists)
             .get(":listId", this.getList)
+            .get("/:listId/tasks", this.getTasksByListId)
             //TODO - may need to add route to get tasks from a list
             .post("", this.create)
             .delete("/:listId", this.delete);
@@ -30,7 +32,14 @@ export class ListsController extends BaseController {
             next(error);
         }
     }
-
+    async getTasksByListId(req, res, next) {
+        try {
+            let tasks = await tasksService.findByListId(req.params.listId)
+            res.send(tasks)
+        } catch (error) {
+            next(error);
+        }
+    }
     async create(req, res, next) {
         try {
             req.query.creatorEmail = req.userInfo.email;

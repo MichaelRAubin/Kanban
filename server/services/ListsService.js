@@ -16,9 +16,9 @@ class ListsService {
         }
         return list;
     }
-    async findByBoardId(_id) {
-        let lists = await dbContext.Lists.find(_id)
-        if (!_id) {
+    async findByBoardId(boardId) {
+        let lists = await dbContext.Lists.find(boardId)
+        if (!boardId) {
             throw new BadRequest("Invalid ID")
         } return lists
     }

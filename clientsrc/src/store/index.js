@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { $resource } from "./resource";
 import boardsStore from "./BoardsStore";
+import listsStore from "./ListsStore";
+import tasksStore from "./TasksStore";
+import commentsStore from "./CommentsStore";
 
 Vue.use(Vuex);
 
@@ -31,6 +34,9 @@ export default new Vuex.Store({
 
   },
   modules: {
-    boardsStore
+    boardsStore,
+    listsStore,
+    tasksStore,
+    commentsStore
   }
 });

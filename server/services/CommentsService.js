@@ -16,6 +16,12 @@ class CommentsService {
         }
         return comment;
     }
+    async findByTaskId(taskId) {
+        let comments = await dbContext.Comments.find(taskId)
+        if (!taskId) {
+            throw new BadRequest("Invalid ID")
+        } return comments
+    }
     async create(commentData) {
         let comment = await dbContext.Comments.create(commentData)
         if (!comment) {

@@ -1,6 +1,7 @@
 import BaseController from "../utils/BaseController";
 import auth0Provider from "@bcwdev/auth0provider";
 import { tasksService } from "../services/TasksService"
+import { commentsService } from "../services/CommentsService"
 
 export class TasksController extends BaseController {
     constructor() {
@@ -10,6 +11,7 @@ export class TasksController extends BaseController {
             .use(auth0Provider.getAuthorizedUserInfo)
             .get("", this.getTasks)
             .get("/:boardId", this.getTask)
+            .get("/:taskId/comments", this.getCommentsByTaskId)
             //TODO add in route to get comments tied to a task?
             .post("", this.create)
             .delete("/:boardId", this.delete);
@@ -28,6 +30,14 @@ export class TasksController extends BaseController {
         try {
             let task = await tasksService.findOne({ _id: req.params.boardId, creatorEmail: req.userInfo.email });
             res.send(task);
+        } catch (error) {
+            next(error);
+        }
+    }
+    async getCommentsByTaskId(req, res, next) {
+        try {
+            let comments = await commentsService.findByTaskId(req.params.listId)
+            res.send(comments)
         } catch (error) {
             next(error);
         }
