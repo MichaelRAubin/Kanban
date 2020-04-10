@@ -4,7 +4,7 @@ import { $resource } from "./resource";
 export default {
     state: {
         lists: [],
-        board: new List()
+        list: new List()
     },
     mutations: {
         setLists(state, lists = []) {
@@ -24,13 +24,16 @@ export default {
         },
     },
     actions: {
-        async getLists({ commit }) {
-            let lists = await $resource.get("api/boardId/lists");
+        async getLists({ commit }, boardId) {
+            let lists = await $resource.get("api/boards/" + boardId + "/lists");
             commit("setLists", lists);
         },
-        async getList({ commit }, id) {
-            let lists = await $resource.get("api/lists/" + id);
+        //TODO change route to use the board controller
+        async getList({ commit }, boardId) {
+            debugger
+            let lists = await $resource.get("api/boards" + boardId + "/lists");
             commit("setList", lists);
+            debugger
         },
         async createList({ commit }, listData) {
             let list = await $resource.post("api/lists/", listData);
@@ -38,7 +41,7 @@ export default {
             commit("setList", list);
             commit("addList", list);
         },
-        async deleteBoard({ commit }, list) {
+        async deleteList({ commit }, list) {
             await $resource.delete("api/lists/" + list.id)
             commit("deleteList", list);
         }

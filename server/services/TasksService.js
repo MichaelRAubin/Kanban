@@ -16,9 +16,9 @@ class TasksService {
         }
         return task;
     }
-    async findByListId(listId) {
-        let tasks = await dbContext.Tasks.find(listId)
-        if (!listId) {
+    async findByListId(list) {
+        let tasks = await dbContext.Tasks.find(list.id)
+        if (!list) {
             throw new BadRequest("Invalid ID")
         } return tasks
     }

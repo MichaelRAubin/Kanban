@@ -1,39 +1,34 @@
 <template>
   <div class="board container-fluid">
-    <div>
-      <div class="col-8">
+    <div class="row">
+      <div class="col-12 mt-2">
         <h4>Name: {{board.name}}</h4>
         <h5>Description: {{board.description}}</h5>
       </div>
-      <div class="form-group">
-        <form @submit.prevent="createList()">
-          <div class="mb-3">
-            <label for="name">List Name:</label>
-            <span>
-              <input
-                class="form-control mb-2"
-                type="text"
-                placeholder="List Name..."
-                v-model="editable.name"
-              />
-              <button class="btn btn btn-success" type="submit">Create List</button>
-            </span>
-          </div>
-          <div class="my-3"></div>
-        </form>
+      <div class="row">
+        <div class="col-12 mt-2 mb-2">
+          <form @submit.prevent="createList">
+            <label for="name" class="ml-3 mr-2">List Name:</label>
+            <input type="text" class="mr-2" placeholder="List Name..." v-model="editable.name" />
+            <button type="submit">Create List</button>
+          </form>
+        </div>
       </div>
     </div>
     <hr class="m-0 pb-0" />
-    <ListsComp :list="list" />
+    <div class="row">
+      <Lists v-for="list in lists" :key="list.id" :listProp="list" />
+    </div>
   </div>
 </template>
 <script>
 import { List } from "../models/List";
-import ListsComp from "../components/ListsComp";
+import Lists from "../components/Lists";
 export default {
   name: "Board",
+  props: ["boardId"],
   components: {
-    ListsComp
+    Lists
   },
   data() {
     return {
@@ -51,26 +46,17 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getBoard", this.$route.params.boardId);
+    this.$store.dispatch("getLists", this.$route.params.boardId);
   },
   computed: {
     board() {
       return this.$store.state.boardsStore.board;
     },
-    list() {
+    lists() {
       return this.$store.state.listsStore.lists;
     }
-  },
-  methods: {}
+  }
 };
 </script>
 <style>
-.boxes {
-  max-width: 100vw;
-  overflow-x: auto;
-}
-.box {
-  min-height: 80-vh;
-  width: 200px;
-  background-color: var(--info);
-}
 </style>

@@ -4,6 +4,7 @@ import { $resource } from "./resource";
 export default {
     state: {
         tasks: [],
+        //TODO update this based upon Mark's code snippit
         task: new Task()
     },
     mutations: {
