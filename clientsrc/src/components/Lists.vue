@@ -1,6 +1,6 @@
 <template>
-  <div class="lists col-12 col-lg-3">
-    <div class="card mt-3">
+  <div class="lists col-12 col-lg-3 boxes">
+    <div class="card mt-3 box">
       <div class="card-body">
         <h5 class="card-title">{{listProp.title}}</h5>
       </div>
@@ -22,7 +22,7 @@ export default {
 }
 .box {
   min-height: 80-vh;
-  width: 200px;
+  width: 400px;
   background-color: var(--info);
 }
 </style>

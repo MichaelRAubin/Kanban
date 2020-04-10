@@ -9,7 +9,7 @@
         <div class="col-12 mt-2 mb-2">
           <form @submit.prevent="createList">
             <label for="name" class="ml-3 mr-2">List Name:</label>
-            <input type="text" class="mr-2" placeholder="List Name..." v-model="editable.name" />
+            <input type="text" class="mr-2" placeholder="List Name..." v-model="editable.title" />
             <button type="submit">Create List</button>
           </form>
         </div>
@@ -37,11 +37,11 @@ export default {
   },
   methods: {
     createList() {
-      debugger;
-      $auth.user.email = board.creatorEmail;
-      this.editable.board = this.$route.params.boardId;
-      this.$store.dispatch("createList", this.editable);
-      this.editable = new List();
+      this.$store.dispatch("createList", {
+        title: this.editable.title,
+        boardId: this.$route.params.boardId
+      });
+      //this.editable = new List();
     }
   },
   mounted() {

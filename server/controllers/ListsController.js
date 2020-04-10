@@ -42,7 +42,7 @@ export class ListsController extends BaseController {
     }
     async create(req, res, next) {
         try {
-            req.query.creatorEmail = req.userInfo.email;
+            req.body.creatorEmail = req.userInfo.email;
             let list = await listsService.create(req.body)
             res.send(list);
         } catch (error) {
