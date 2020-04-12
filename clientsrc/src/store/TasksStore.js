@@ -11,6 +11,7 @@ export default {
     mutations: {
         setTasks(state, payload) {
             Vue.set(state.tasks, payload.listId, payload.data);
+            debugger
         },
         setTask(state, task = new Task()) {
             state.task = task;
@@ -28,7 +29,8 @@ export default {
     actions: {
         async getTasks({ commit, dispatch }, listId) {
             let res = await $resource.get("api/lists/" + listId + "/tasks");
-            commit("setTasks", { listId, tasks: res.data });
+            commit("setTasks", { payload: listId, tasks: res.data });
+
         },
         async getTask({ commit }, id) {
             let tasks = await $resource.get("api/tasks/" + id);
