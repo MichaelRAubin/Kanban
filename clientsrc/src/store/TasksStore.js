@@ -4,14 +4,15 @@ import Vue from 'vue';
 
 export default {
     state: {
-        tasks: { listId: [] },
+        tasks: {
+            listId: []
+        }
         //TODO update this based upon Mark's code snippit
 
     },
     mutations: {
         setTasks(state, payload) {
-            Vue.set(state.tasks, payload.listId, payload.data);
-            debugger
+            Vue.set(state.tasks, payload.listId, payload.tasks);
         },
         setTask(state, task = new Task()) {
             state.task = task;
@@ -27,9 +28,10 @@ export default {
         },
     },
     actions: {
-        async getTasks({ commit, dispatch }, listId) {
-            let res = await $resource.get("api/lists/" + listId + "/tasks");
-            commit("setTasks", { payload: listId, tasks: res.data });
+        //TODO update to Mark's code
+        async getTasks({ commit, dispatch }, payload) {
+            let res = await $resource.get("api/lists/" + payload + "/tasks");
+            commit("setTasks", { listId: payload, tasks: res.data });
 
         },
         async getTask({ commit }, id) {
