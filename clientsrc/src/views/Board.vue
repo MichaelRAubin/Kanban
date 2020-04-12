@@ -16,7 +16,7 @@
       </div>
     </div>
     <hr class="m-0 pb-0" />
-    <div class="row">
+    <div class="row boxes">
       <Lists v-for="list in lists" :key="list.id" :listProp="list" />
     </div>
   </div>
@@ -59,4 +59,8 @@ export default {
 };
 </script>
 <style>
+.boxes {
+  max-width: 100vw;
+  overflow-x: auto;
+}
 </style>
