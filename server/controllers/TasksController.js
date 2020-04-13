@@ -10,11 +10,11 @@ export class TasksController extends BaseController {
         this.router
             .use(auth0Provider.getAuthorizedUserInfo)
             .get("", this.getTasks)
-            .get("/:boardId", this.getTask)
+            .get("/:taskId", this.getTask)
             .get("/:taskId/comments", this.getCommentsByTaskId)
             //TODO add in route to get comments tied to a task?
             .post("", this.create)
-            .delete("/:boardId", this.delete);
+            .delete("/:listId", this.delete);
     }
 
     async getTasks(req, res, next) {
@@ -45,7 +45,6 @@ export class TasksController extends BaseController {
 
     async create(req, res, next) {
         try {
-            // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
             req.body.creatorEmail = req.userInfo.email;
             let task = await tasksService.create(req.body);
             res.send(task);

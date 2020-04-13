@@ -6,7 +6,7 @@
 <script>
 export default {
   name: "tasks",
-  props: ["taskProp"],
+  props: { task: { type: Object, required: true } },
   computed: {
     tasks() {
       return this.$store.state.tasksStore.tasks;

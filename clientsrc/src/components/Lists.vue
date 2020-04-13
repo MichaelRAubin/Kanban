@@ -4,22 +4,41 @@
       <div class="card-body">
         <h5 class="card-title">{{list.title}}</h5>
         <i
+          v-if="$auth.isAuthenticated && $auth.user.email == list.creatorEmail"
           class="fa fa-trash text-danger mt-n4 float-right pointer"
           style="font-size:18px;"
           @click="deleteList"
         ></i>
-        <hr class="m-0 pb-0" />
+        <hr class="m-0 pb-0 mb-3" />
+        <div class="row">
+          <div class="col-12">
+            <form @submit.prevent="createTask">
+              <label for="name" class="ml-3 mr-2"></label>
+              <input type="text" class="mr-2" placeholder="Task Name..." v-model="editable.title" />
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <Tasks v-for="task in tasks" :key="task.id" :taskProp="task" />
+      <Tasks v-for="task in tasks" :key="task.id" :task="task" />
     </div>
   </div>
 </template>
 <script>
-//import List from "../models/List";
+import List from "../models/List";
+import { Task } from "../models/Task";
+import { Board } from "../models/Board";
 import Tasks from "../components/Tasks";
 export default {
   name: "Lists",
-  props: { list: { type: Object, required: true } },
+  props: {
+    list: { type: Object, required: true }
+  },
+  data() {
+    return {
+      editable: new Task()
+    };
+  },
   computed: {
     tasks() {
       return this.$store.state.tasksStore.tasks[this.list.id] || [];
@@ -29,7 +48,6 @@ export default {
     async getTasks() {
       await this.$store.dispatch("getTasks", this.list.id);
     },
-
     async deleteList() {
       let yes = await this.$confirm("Delete the list?");
       if (!yes) {
@@ -37,6 +55,14 @@ export default {
       } else {
       }
       this.$store.dispatch("deleteList", this.list);
+    },
+    createTask() {
+      this.$store.dispatch("createTask", {
+        title: this.editable.title,
+        listId: this.list.id,
+        boardId: this.$route.params.boardId
+      });
+      this.editable.title = "";
     }
   },
   components: {
@@ -54,7 +80,7 @@ export default {
 }
 .box {
   min-height: 80-vh;
-  width: 300px;
+  width: 320px;
   background-color: var(--secondary);
 }
 hr {
