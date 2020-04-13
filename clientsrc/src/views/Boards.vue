@@ -19,7 +19,7 @@
           <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
           <i
             v-if="$auth.isAuthenticated && $auth.user.email == board.creatorEmail"
-            class="fa fa-trash text-danger mr-2 ml-3"
+            class="fa fa-trash text-danger mr-2 ml-3 pointer"
             style="font-size:18px;"
             @click="deleteBoard(board)"
           ></i>
@@ -63,4 +63,7 @@ export default {
 };
 </script>
 <style>
+.pointer {
+  cursor: pointer;
+}
 </style>

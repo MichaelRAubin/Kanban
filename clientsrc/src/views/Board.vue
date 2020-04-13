@@ -17,13 +17,13 @@
     </div>
     <hr class="m-0 pb-0" />
     <div class="row boxes">
-      <Lists v-for="list in lists" :key="list.id" :listProp="list" />
+      <Lists v-for="list in lists" :key="list.id" :list="list" />
     </div>
   </div>
 </template>
 <script>
 import { List } from "../models/List";
-import Lists from "../components/Lists";
+import Lists from "../components/Lists.vue";
 export default {
   name: "Board",
   props: ["boardId"],
