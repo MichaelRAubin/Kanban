@@ -1,14 +1,13 @@
 import { Task } from "../models/Task";
 import { $resource } from "./resource";
-import Vue from 'vue';
+
 
 export default {
     state: {
         tasks: [],
-        task: new Task()
     },
     mutations: {
-        setTasks(state, tasks = []) {
+        setTasks(state, tasks) {
             state.tasks = tasks;
         },
         setTask(state, task = new Task()) {
@@ -51,7 +50,7 @@ export default {
                 mappedTasks[ts.listId] = ts;
             });
             return mappedTasks;
-            debugger
+
         }
     }
 };

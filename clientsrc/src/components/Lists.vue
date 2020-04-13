@@ -14,13 +14,15 @@
           <div class="col-12">
             <form @submit.prevent="createTask">
               <label for="name" class="ml-3 mr-2"></label>
-              <input type="text" class="mr-2" placeholder="Task Name..." v-model="editable.title" />
+              <input type="text" class="mr-2" placeholder="Task Title..." v-model="editable.title" />
               <button type="submit">Add</button>
             </form>
           </div>
         </div>
       </div>
-      <Tasks v-for="task in tasks" :key="task.id" :taskProp="task" />
+      <div v-for="task in tasks" :key="task.id">
+        <Tasks :taskProp="task" />
+      </div>
     </div>
   </div>
 </template>

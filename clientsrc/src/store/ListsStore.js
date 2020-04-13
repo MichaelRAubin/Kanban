@@ -28,7 +28,6 @@ export default {
             let lists = await $resource.get("api/boards/" + boardId + "/lists");
             commit("setLists", lists);
         },
-        //TODO change route to use the board controller
         async getList({ commit }, boardId) {
             let lists = await $resource.get("api/boards" + boardId + "/lists");
             commit("setList", lists);
