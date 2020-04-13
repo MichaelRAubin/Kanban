@@ -4,13 +4,12 @@ import Vue from 'vue';
 
 export default {
     state: {
-        tasks: {
-            listId: []
-        }
+        tasks: [],
+        task: new Task()
     },
     mutations: {
-        setTasks(state, payload) {
-            Vue.set(state.tasks, payload.listId, payload.tasks);
+        setTasks(state, tasks = []) {
+            state.tasks = tasks;
         },
         setTask(state, task = new Task()) {
             state.task = task;
@@ -26,33 +25,33 @@ export default {
         },
     },
     actions: {
-        async getTasks({ commit, dispatch }, payload) {
-            let res = await $resource.get("api/lists/" + payload + "/tasks");
-            commit("setTasks", { listId: payload, tasks: res.data });
-
+        async getTasks({ commit }, listId) {
+            let tasks = await $resource.get("api/lists/" + listId + "/tasks");
+            commit("setTasks", tasks);
         },
         async getTask({ commit }, id) {
-            let tasks = await $resource.get("api/tasks/" + id);
-            commit("setTask", tasks);
+            let task = await $resource.get("api/tasks/" + id);
+            commit("setTask", task);
         },
         async createTask({ commit }, taskData) {
             let task = await $resource.post("api/tasks/", taskData);
             // REVIEW when creating a board this sets it as the active board
-            commit("setTask", task);
             commit("addTask", task);
+            commit("setTask", task);
         },
         async deleteTask({ commit }, task) {
             await $resource.delete("api/tasks/" + task.id)
             commit("deleteTask", task);
         }
     },
-    // getters: {
-    //     tasks(state) {
-    //         let mappedTasks = {};
-    //         state.tasks.forEach(ts => {
-    //             mappedTasks[ts.listId] = ts;
-    //         });
-    //         return mappedTasks;
-    //     }
-    // }
+    getters: {
+        renderTasks(state) {
+            let mappedTasks = {};
+            state.tasks.forEach(ts => {
+                mappedTasks[ts.listId] = ts;
+            });
+            return mappedTasks;
+            debugger
+        }
+    }
 };

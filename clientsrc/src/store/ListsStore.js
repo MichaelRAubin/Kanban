@@ -30,10 +30,9 @@ export default {
         },
         //TODO change route to use the board controller
         async getList({ commit }, boardId) {
-            debugger
             let lists = await $resource.get("api/boards" + boardId + "/lists");
             commit("setList", lists);
-            debugger
+
         },
         async createList({ commit }, listData) {
             let list = await $resource.post("api/lists/", listData);

@@ -1,17 +1,18 @@
 <template>
-  <div class="tasks border rounded mt-2 bg-white">
-    <p class="description">{{taskProp.title}}</p>
+  <div class="tasks">
+    <div class="border rounded mt-2 text-dark bg-white">
+      <div>
+        <p class="title">{{taskProp.title}}</p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { Task } from "../models/Task";
 export default {
   name: "tasks",
-  props: { task: { type: Object, required: true } },
-  computed: {
-    tasks() {
-      return this.$store.state.tasksStore.tasks;
-    }
-  }
+  props: ["taskProp"],
+  computed: {}
 };
 </script>
 <style lang="scss" scoped>

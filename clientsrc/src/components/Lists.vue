@@ -1,5 +1,5 @@
 <template>
-  <div class="Lists col-12 col-lg-3">
+  <div class="lists col-12 col-lg-3">
     <div class="card mt-4 mr-5 text-light box">
       <div class="card-body">
         <h5 class="card-title">{{list.title}}</h5>
@@ -20,19 +20,22 @@
           </div>
         </div>
       </div>
-      <Tasks v-for="task in tasks" :key="task.id" :task="task" />
+      <Tasks v-for="task in tasks" :key="task.id" :taskProp="task" />
     </div>
   </div>
 </template>
 <script>
-import List from "../models/List";
+import { List } from "../models/List";
 import { Task } from "../models/Task";
 import { Board } from "../models/Board";
-import Tasks from "../components/Tasks";
+import Tasks from "../components/Tasks.vue";
 export default {
   name: "Lists",
   props: {
     list: { type: Object, required: true }
+  },
+  components: {
+    Tasks
   },
   data() {
     return {
@@ -41,13 +44,10 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.state.tasksStore.tasks[this.list.id] || [];
+      return this.$store.getters.renderTasks[this.list.id];
     }
   },
   methods: {
-    async getTasks() {
-      await this.$store.dispatch("getTasks", this.list.id);
-    },
     async deleteList() {
       let yes = await this.$confirm("Delete the list?");
       if (!yes) {
@@ -65,11 +65,8 @@ export default {
       this.editable.title = "";
     }
   },
-  components: {
-    Tasks
-  },
   mounted() {
-    this.getTasks();
+    this.$store.dispatch("getTasks", this.list.id);
   }
 };
 </script>
