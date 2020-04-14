@@ -20,9 +20,7 @@
           </div>
         </div>
       </div>
-      <div v-for="task in tasks" :key="task.id">
-        <Tasks :taskProp="task" />
-      </div>
+      <Tasks v-for="task in tasks" :key="task.id" :taskProp="task" />
     </div>
   </div>
 </template>
@@ -46,7 +44,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.getters.renderTasks[this.list.id];
+      return this.$store.getters.renderTasks[this.list.id] || [];
     }
   },
   methods: {
@@ -68,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getTasks", this.list.id);
+    // this.$store.dispatch("getTasks", this.list.id);
   }
 };
 </script>
@@ -89,7 +87,7 @@ hr {
   margin-left: auto;
   margin-right: auto;
   border-style: inset;
-  border-width: 1px;
+  border-width: 2px;
 }
 .pointer {
   cursor: pointer;

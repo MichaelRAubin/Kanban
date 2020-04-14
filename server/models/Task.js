@@ -5,7 +5,7 @@ const TaskSchema = new Schema(
     {
         title: { type: String, required: true },
         listId: { type: Schema.Types.ObjectId, rel: "list", required: true },
-        //boardId: { type: Schema.Types.ObjectId, rel: "board", required: true },
+        boardId: { type: Schema.Types.ObjectId, rel: "board", required: true },
         creatorEmail: { type: String, required: true }
     },
     { timestamps: true, toJSON: { virtuals: true } }

@@ -2,6 +2,7 @@ import BaseController from "../utils/BaseController";
 import auth0Provider from "@bcwdev/auth0provider";
 import { boardsService } from "../services/BoardsService"
 import { listsService } from "../services/ListsService"
+import { tasksService } from "../services/TasksService"
 
 export class BoardsController extends BaseController {
     constructor() {
@@ -11,6 +12,7 @@ export class BoardsController extends BaseController {
             .get("", this.getBoards)
             .get("/:boardId", this.getBoard)
             .get("/:boardId/lists", this.getListsByBoardId)
+            .get("/:boardId/tasks", this.getTasksByBoardId)
             //TODO add in route to get lists tied to board
             .post("", this.create)
             .delete("/:boardId", this.delete);
@@ -41,7 +43,14 @@ export class BoardsController extends BaseController {
             next(error);
         }
     }
-
+    async getTasksByBoardId(req, res, next) {
+        try {
+            let tasks = await tasksService.findByBoardId(req.params.boardId)
+            res.send(tasks)
+        } catch (error) {
+            next(error);
+        }
+    }
     async create(req, res, next) {
         try {
             // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID

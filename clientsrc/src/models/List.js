@@ -3,11 +3,13 @@ export class List {
         id = "",
         title = "",
         creator = {},
-        creatorEmail = ""
+        creatorEmail = "",
+        boardId = ""
     } = {}) {
         this.id = id;
         this.title = title;
         this.creatorEmail = creatorEmail;
         this.creator = creator;
+        this.boardId = boardId;
     }
 }

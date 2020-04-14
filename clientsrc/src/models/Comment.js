@@ -3,11 +3,13 @@ export class Comment {
         id = "",
         name = "",
         creator = {},
-        creatorEmail = ""
+        creatorEmail = "",
+        taskId = ""
     } = {}) {
         this.id = id;
         this.name = name;
         this.creatorEmail = creatorEmail;
         this.creator = creator;
+        this.taskId = taskId;
     }
 }

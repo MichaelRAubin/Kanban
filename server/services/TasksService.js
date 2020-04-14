@@ -22,6 +22,13 @@ class TasksService {
             throw new BadRequest("Invalid ID")
         } return tasks
     }
+    async findByBoardId(boardId) {
+        let tasks = await dbContext.Tasks.find({ boardId: boardId })
+        if (!boardId) {
+            throw new BadRequest("Invalid ID")
+        } return tasks
+    }
+
     async create(taskData) {
         let task = await dbContext.Tasks.create(taskData)
         if (!task) {

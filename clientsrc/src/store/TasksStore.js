@@ -2,6 +2,7 @@ import { Task } from "../models/Task";
 import { $resource } from "./resource";
 
 
+
 export default {
     state: {
         tasks: [],
@@ -24,8 +25,8 @@ export default {
         },
     },
     actions: {
-        async getTasks({ commit }, listId) {
-            let tasks = await $resource.get("api/lists/" + listId + "/tasks");
+        async getTasks({ commit }, boardId) {
+            let tasks = await $resource.get("api/boards/" + boardId + "/tasks");
             commit("setTasks", tasks);
         },
         async getTask({ commit }, id) {
@@ -36,7 +37,7 @@ export default {
             let task = await $resource.post("api/tasks/", taskData);
             // REVIEW when creating a board this sets it as the active board
             commit("addTask", task);
-            commit("setTask", task);
+            //commit("setTask", task);
         },
         async deleteTask({ commit }, task) {
             await $resource.delete("api/tasks/" + task.id)
@@ -46,11 +47,14 @@ export default {
     getters: {
         renderTasks(state) {
             let mappedTasks = {};
-            state.tasks.forEach(ts => {
-                mappedTasks[ts.listId] = ts;
-            });
+            state.tasks.forEach(task => {
+                if (!mappedTasks[task.listId]) {
+                    mappedTasks[task.listId] = []
+                }
+                mappedTasks[task.listId].push(task)
+            }
+            );
             return mappedTasks;
-
         }
     }
 };

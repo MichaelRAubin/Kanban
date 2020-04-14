@@ -14,7 +14,7 @@ export class TasksController extends BaseController {
             .get("/:taskId/comments", this.getCommentsByTaskId)
             //TODO add in route to get comments tied to a task?
             .post("", this.create)
-            .delete("/:listId", this.delete);
+            .delete("/:taskId", this.delete);
     }
 
     async getTasks(req, res, next) {
@@ -54,8 +54,8 @@ export class TasksController extends BaseController {
     }
     async delete(req, res, next) {
         try {
-            let task = await tasksService.delete(req.params.boardId);
-            res.send("Task Deleted", task)
+            let task = await tasksService.delete({ _id: req.params.taskId });
+            res.send("Task Deleted")
         } catch (error) {
             next(error)
         }
