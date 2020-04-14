@@ -11,13 +11,7 @@
 import { Task } from "../models/Task";
 export default {
   name: "Tasks",
-  props: {
-    taskProp: {
-      id: String,
-      title: String,
-      creatorEmail: String
-    }
-  },
+  props: ["taskProp"],
   computed: {}
 };
 </script>
