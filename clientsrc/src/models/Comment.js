@@ -1,15 +1,19 @@
 export class Comment {
     constructor({
         id = "",
-        name = "",
+        title = "",
         creator = {},
         creatorEmail = "",
-        taskId = ""
+        taskId = "",
+        listId = "",
+        boardId = ""
     } = {}) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.creatorEmail = creatorEmail;
         this.creator = creator;
         this.taskId = taskId;
+        this.listId = listId;
+        this.boardId = boardId
     }
 }

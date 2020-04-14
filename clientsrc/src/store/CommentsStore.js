@@ -4,7 +4,7 @@ import { $resource } from "./resource";
 export default {
     state: {
         comments: [],
-        comment: new Comment()
+
     },
     mutations: {
         setComments(state, comments = []) {
@@ -35,7 +35,7 @@ export default {
         async createComment({ commit }, commentData) {
             let comment = await $resource.post("api/comments/", commentData);
             // REVIEW when creating a board this sets it as the active board
-            commit("setComment", comment);
+            //commit("setComment", comment);
             commit("addComment", comment);
         },
         async deleteComment({ commit }, comment) {

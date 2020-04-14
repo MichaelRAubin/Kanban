@@ -5,6 +5,8 @@ const CommentSchema = new Schema(
     {
         title: { type: String, required: true },
         taskId: { type: Schema.Types.ObjectId, rel: "task", required: true },
+        listId: { type: Schema.Types.ObjectId, rel: "list", required: true },
+        boardId: { type: Schema.Types.ObjectId, rel: "board", requird: true },
         creatorEmail: { type: String, required: true }
     },
     { timestamps: true, toJSON: { virtuals: true } }
