@@ -9,8 +9,8 @@ class TasksService {
         }
         return tasks;
     }
-    async findOne(_id, creatorEmail) {
-        let task = await dbContext.Tasks.findById(_id, creatorEmail)
+    async findOne(taskId) {
+        let task = await dbContext.Tasks.findById(taskId)
         if (!task) {
             throw new BadRequest("Invalid Id")
         }
@@ -35,6 +35,14 @@ class TasksService {
             throw new BadRequest("Invalid email")
         }
         return task;
+    }
+    async updateTask(taskData) {
+        let updatedTask = await this.findOne(taskData);
+        // @ts-ignore
+        updatedTask.listId = task.listId;
+        // @ts-ignore
+        let taskWithNewId = await dbContext.Tasks.findByIdAndUpdate(task.id, updatedTask, { new: true });
+        return taskWithNewId
     }
 
     async delete(_id) {

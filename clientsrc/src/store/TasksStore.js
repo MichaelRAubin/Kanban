@@ -1,6 +1,7 @@
 import { Task } from "../models/Task";
 import { $resource } from "./resource";
-
+import Vue from "vue"
+import Vuex from "vuex"
 
 
 export default {
@@ -23,6 +24,10 @@ export default {
                 state.tasks.splice(i, 1)
             }
         },
+        updateTask(state, task) {
+            let index = state.tasks.findIndex(i => i.id == task.id)
+            state.items.splice(index, 1, task)
+        }
     },
     actions: {
         async getTasks({ commit }, boardId) {
@@ -42,6 +47,11 @@ export default {
         async deleteTask({ commit }, task) {
             await $resource.delete("api/tasks/" + task.id)
             commit("deleteTask", task);
+        },
+        async moveTask({ commit }, { task, to }) {
+            task.listId = to
+            await $resource.put("api/tasks/" + task.id)
+            commit("updateTask", task)
         }
     },
     getters: {

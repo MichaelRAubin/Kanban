@@ -1,5 +1,13 @@
 <template>
-  <div class="lists col-12 col-lg-3">
+  <div
+    class="lists col-12 col-lg-3"
+    ref="droppable"
+    droppable="true"
+    @dragover.prevent
+    @drop.capture="addTask"
+    @dragenter="dragEnter"
+    @dragleave="dragLeave"
+  >
     <div class="card mt-4 mr-5 text-light box">
       <div class="card-body">
         <h5 class="card-title">{{list.title}}</h5>
@@ -63,6 +71,21 @@ export default {
         boardId: this.$route.params.boardId
       });
       this.editable.title = "";
+    },
+    addTask() {
+      this.$refs.droppable.classList.remove("droppable");
+      let task = JSON.parse(event.dataTransfer.getData("data"));
+      let from = event.dataTransfer.getData("from");
+      if (from == this.list.id) {
+        return;
+      }
+      this.$store.dispatch("moveTask", { task, to: this.list.id });
+    },
+    dragEnter() {
+      this.$refs.droppable.classList.add("droppable");
+    },
+    dragLeave() {
+      this.$refs.droppable.classList.remove("droppable");
     }
   },
   mounted() {

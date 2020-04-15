@@ -1,5 +1,12 @@
 <template>
-  <div class="tasks">
+  <div
+    class="tasks"
+    ref="draggable"
+    draggable="true"
+    @dragstart.capture="moving"
+    @dragend="dragEnd"
+    @dragover.prevent
+  >
     <div class="border shadow rounded mt-2 mb-2 mx-auto text-dark task-box">
       <div>
         <h6 class="title mt-2 ml-3">{{taskProp.title}}</h6>
@@ -70,6 +77,22 @@ export default {
         boardId: this.$route.params.boardId
       });
       this.editable.title = "";
+    },
+    moving(event) {
+      let from = this.taskProp.listId;
+      event.dataTransfer.setData("data", JSON.stringify(this.taskProp));
+      event.dataTransfer.setData("from", from);
+      this.$refs.draggable.classList.add("dragging");
+      event.dataTransfer.setDragImage(this.$refs.draggable, 20, 20);
+    },
+    dragEnd() {
+      // reverts style when dropping into the same zone
+      try {
+        this.$refs.draggable.classList.remove("dragging");
+      } catch (e) {}
+    },
+    dragging() {
+      console.log("we are dragging the task", this.taskProp);
     }
   },
   mounted() {
