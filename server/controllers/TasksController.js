@@ -14,7 +14,7 @@ export class TasksController extends BaseController {
             .get("/:taskId/comments", this.getCommentsByTaskId)
             //TODO add in route to get comments tied to a task?
             .post("", this.create)
-            .put("/:taskId", this.updateTask)
+            .put("", this.updateTask)
             .delete("/:taskId", this.delete);
     }
 

@@ -36,8 +36,8 @@ class TasksService {
         }
         return task;
     }
-    async updateTask(taskData) {
-        let updatedTask = await this.findOne(taskData);
+    async updateTask(task) {
+        let updatedTask = await this.findOne(task);
         // @ts-ignore
         updatedTask.listId = task.listId;
         // @ts-ignore

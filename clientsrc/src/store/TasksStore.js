@@ -26,7 +26,7 @@ export default {
         },
         updateTask(state, task) {
             let index = state.tasks.findIndex(i => i.id == task.id)
-            state.items.splice(index, 1, task)
+            state.tasks.splice(index, 1, task)
         }
     },
     actions: {
@@ -50,8 +50,8 @@ export default {
         },
         async moveTask({ commit }, { task, to }) {
             task.listId = to
-            await $resource.put("api/tasks/" + task.id)
-            commit("updateTask", task)
+            let taskToMove = await $resource.put("api/tasks/", task)
+            commit("updateTask", taskToMove)
         }
     },
     getters: {
