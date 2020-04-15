@@ -3,6 +3,7 @@ import auth0Provider from "@bcwdev/auth0provider";
 import { boardsService } from "../services/BoardsService"
 import { listsService } from "../services/ListsService"
 import { tasksService } from "../services/TasksService"
+import { commentsService } from "../services/CommentsService"
 
 export class BoardsController extends BaseController {
     constructor() {
@@ -13,6 +14,7 @@ export class BoardsController extends BaseController {
             .get("/:boardId", this.getBoard)
             .get("/:boardId/lists", this.getListsByBoardId)
             .get("/:boardId/tasks", this.getTasksByBoardId)
+            .get("/:boardId/comments", this.getCommentsByBoardId)
             //TODO add in route to get lists tied to board
             .post("", this.create)
             .delete("/:boardId", this.delete);
@@ -47,6 +49,14 @@ export class BoardsController extends BaseController {
         try {
             let tasks = await tasksService.findByBoardId(req.params.boardId)
             res.send(tasks)
+        } catch (error) {
+            next(error);
+        }
+    }
+    async getCommentsByBoardId(req, res, next) {
+        try {
+            let comments = await commentsService.findByBoardId(req.params.boardId)
+            res.send(comments)
         } catch (error) {
             next(error);
         }

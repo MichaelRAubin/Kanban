@@ -16,9 +16,15 @@ class CommentsService {
         }
         return comment;
     }
-    async findByTaskId(task) {
-        let comments = await dbContext.Comments.find(task.id)
-        if (!task) {
+    async findByTaskId(taskId) {
+        let comments = await dbContext.Comments.find({ taskId: taskId })
+        if (!taskId) {
+            throw new BadRequest("Invalid ID")
+        } return comments
+    }
+    async findByBoardId(boardId) {
+        let comments = await dbContext.Comments.find({ boardId: boardId })
+        if (!boardId) {
             throw new BadRequest("Invalid ID")
         } return comments
     }

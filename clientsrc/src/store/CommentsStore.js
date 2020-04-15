@@ -24,8 +24,8 @@ export default {
         },
     },
     actions: {
-        async getComments({ commit }) {
-            let comments = await $resource.get("api/taskId/comments");
+        async getComments({ commit }, boardId) {
+            let comments = await $resource.get("api/boards/" + boardId + "/comments");
             commit("setComments", comments);
         },
         async getComment({ commit }, id) {
@@ -41,6 +41,19 @@ export default {
         async deleteComment({ commit }, comment) {
             await $resource.delete("api/comments/" + comment.id)
             commit("deleteComment", comment);
+        }
+    },
+    getters: {
+        renderComments(state) {
+            let mappedComments = {};
+            state.comments.forEach(comment => {
+                if (!mappedComments[comment.taskId]) {
+                    mappedComments[comment.taskId] = []
+                }
+                mappedComments[comment.taskId].push(comment)
+            }
+            );
+            return mappedComments;
         }
     }
 };

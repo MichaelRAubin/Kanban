@@ -5,8 +5,8 @@
         {{commentProp.title}}
         <i
           v-if="$auth.isAuthenticated && $auth.user.email == commentProp.creatorEmail"
-          class="fa fa-trash text-danger mt-n4 float-right pointer"
-          style="font-size:18px;"
+          class="fa fa-trash text-warning mt-1 mr-3 ml-5 float-right pointer"
+          style="font-size:16px;"
           @click="deleteComment(commentProp)"
         ></i>
       </li>
@@ -33,4 +33,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.pointer {
+  cursor: pointer;
+}
+li {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
 </style>

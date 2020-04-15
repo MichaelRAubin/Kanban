@@ -12,8 +12,8 @@
         <hr class="m-0 pb-0 mb-2" />
         <div class="row">
           <div class="col-12">
-            <form @submit.prevent="createComment(commentProp)">
-              <label for="name" class="ml-3 mr-2"></label>
+            <form @submit.prevent="createComment(taskProp)">
+              <label for="name" class="ml-2 mt-2 mr-2"></label>
               <input
                 type="text"
                 class="mr-2 mb-2"
@@ -22,10 +22,14 @@
               />
               <button type="submit">Add</button>
             </form>
+            <div class="row">
+              <ul>
+                <Comments v-for="comment in comments" :key="comment.id" :commentProp="comment" />
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <Comments v-for="comment in comments" :key="comment.id" :commentProp="comment" />
     </div>
   </div>
 </template>
@@ -38,7 +42,7 @@ export default {
   props: { taskProp: { type: Object, required: true } },
   computed: {
     comments() {
-      return this.$store.state.commentsStore.comments;
+      return this.$store.getters.renderComments[this.taskProp.id] || [];
     }
   },
   components: {
@@ -58,16 +62,18 @@ export default {
       }
       this.$store.dispatch("deleteTask", this.taskProp);
     },
-    async createComment(commentProp) {
+    async createComment(taskProp) {
       await this.$store.dispatch("createComment", {
         title: this.editable.title,
-        listId: this.list.id,
-        taskId: this.task.id,
+        listId: this.taskProp.listId,
+        taskId: this.taskProp.id,
         boardId: this.$route.params.boardId
       });
-      debugger;
       this.editable.title = "";
     }
+  },
+  mounted() {
+    this.$store.dispatch("getComments", this.$route.params.boardId);
   }
 };
 </script>
