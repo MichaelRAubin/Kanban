@@ -87,9 +87,6 @@ export default {
     dragLeave() {
       this.$refs.droppable.classList.remove("droppable");
     }
-  },
-  mounted() {
-    // this.$store.dispatch("getTasks", this.list.id);
   }
 };
 </script>
