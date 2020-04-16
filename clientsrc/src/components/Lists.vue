@@ -8,7 +8,7 @@
     @dragenter="dragEnter"
     @dragleave="dragLeave"
   >
-    <div class="card mt-4 mr-5 text-light box">
+    <div class="card mt-4 mr-3 ml-3 text-light box">
       <div class="card-body">
         <h5 class="card-title">{{list.title}}</h5>
         <i
