@@ -39,6 +39,7 @@ export class BoardsController extends BaseController {
     }
     async getListsByBoardId(req, res, next) {
         try {
+            // FIXME verify the user has access to this content
             let lists = await listsService.findByBoardId(req.params.boardId)
             res.send(lists)
         } catch (error) {
@@ -47,6 +48,7 @@ export class BoardsController extends BaseController {
     }
     async getTasksByBoardId(req, res, next) {
         try {
+            // FIXME verify the user has access to this content
             let tasks = await tasksService.findByBoardId(req.params.boardId)
             res.send(tasks)
         } catch (error) {
@@ -73,6 +75,7 @@ export class BoardsController extends BaseController {
     }
     async delete(req, res, next) {
         try {
+            // FIXME restrict to the creator
             let board = await boardsService.delete(req.params.boardId);
             res.send("Board Deleted")
         } catch (error) {
